@@ -5,17 +5,6 @@ const app = new Hono()
 
 app.get('/', (c) => c.text('Hello Hono!'))
 
-const InfiniteScrollItem = () =>
-	<a href="#" class="block">
-		<img
-			alt="Art"
-			src="https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
-			class="h-64 w-64 object-cover sm:h-80 lg:h-96"
-		/>
-		<h3 class="mt-4 text-lg font-bold text-gray-900 sm:text-xl">{faker.lorem.lines(1)}</h3>
-		<p class="mt-2 max-w-sm text-gray-700"> {faker.lorem.paragraph()} </p>
-	</a>
-
 const Layout = ({ children }) =>
 	<html>
 		<head>
@@ -30,9 +19,15 @@ const Layout = ({ children }) =>
 		</body>
 	</html>
 
+// create a div with a random height and background color using faker
+const InfiniteScrollItem = () =>
+	<div class={"w-64 h-20 my-4 rounded-lg bg-slate-700"} >
+		<p>hello</p>
+	</div>
+
 const Loader = ({ page }) =>
 	<div
-		hx-get={`/infinite-scroll/users?page=${page}`}
+		hx-get={`/infinite-scroll/page?page=${page}`}
 		hx-trigger={"revealed"}
 		hx-target={"this"}
 		hx-swap={"outerHTML"}
@@ -64,6 +59,6 @@ const infiniteScrollUsersHandler = (c) => {
 
 app.get('/infinite-scroll', infiniteScrollHandler)
 
-app.get('/infinite-scroll/users', infiniteScrollUsersHandler)
+app.get('/infinite-scroll/page', infiniteScrollUsersHandler)
 
 export default app
